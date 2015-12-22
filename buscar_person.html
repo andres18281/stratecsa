@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<title></title>
+</head>
+<body>
+ <div class="navbar navbar-default">
+ </div>
+  <div class="container">
+   <div class="row" style="margin-top:1%;">
+    <div class="navbar-form"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <form>
+        <div class="form-group" style="display:inline;">
+            <div class="input-group" style="display:table;">
+                <input class="form-control" id="id_person" name="search" placeholder="Digite la cedula" autocomplete="off" autofocus="autofocus" type="text">
+            	<div class="input-group-btn navbar-btn" style="outline:1px solid #7F9192; border-radius:6px;">
+				  <a href="#" class="btn btn-default btn-nav" id="btn_searh">
+				    <span class="glyphicon glyphicon-search"></span>
+				  </a>
+				</div>
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3"></div>
+     
+   </div><!--/.row-->
+    <div class="row">
+     <div class="col-md-3"></div>
+     <div class="col-md-6" id="imagen"></div>
+     <div class="col-md-3"></div>	
+    </div>
+  </div>
+</body>
+</html>
+
+
+<script>
+ $(function(){
+  $("#btn_searh").click(function(){
+    var id = $("#id_person").val();
+    if(id > 5){
+      $.ajax({
+      	//datetype:"html",
+      	type:"post",
+      	url:"controller/buscar_client.php",//
+      	data:{"id":id},
+      	success:function(data){
+      	  $("#imagen").html(data);
+      	// var data = JSON.parse(data);
+      	}
+      });
+    }else{
+    	alert("no existe");
+    }
+  });
+ });
+
+</script>
