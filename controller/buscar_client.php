@@ -1,5 +1,11 @@
 <?php
  include_once('conectar.php');
+   if(!isset($_SESSION)){ 
+     session_start(); 
+   }
+   if(!isset($_SESSION['pass_perfil_rol'])){
+   	 header("location: ../login.php");
+   }
   $conectar = new Conectar('root','');
   if(isset($_POST['id'])){
    $id = $_POST['id'];

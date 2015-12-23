@@ -1,17 +1,29 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<title></title>
+</head>
+<body>
+ 
+<form>
+<input type="button" value="Print this page" onClick="window.print()">
+</form>
+ <div id="imagen">
 
- $im = imagecreatefrompng("plantilla.png");
- $textcolor = imagecolorallocate($im, 0, 0, 255);
- imagestring($im,5,200,300,"hoddddddddddla",$textcolor);
- header ('Content-Type: image/png');
- ob_start();
- imagepng($im,null);
- $imagedata = ob_get_contents();
- // Clear the output buffer
- ob_end_clean();
- print '<p><img src="data:image/png;base64,'.base64_encode($imagedata).'" /></p>';
- //imagedestroy($im);
- //echo "loco";
-// file_put_contents('/my/folder/flower.jpg', $content);
+ </div>
+</body>
+</html>
 
-?>
+<script>
+ $(function(){
+  $.ajax({
+  	type:"get",
+  	data:"id=12222",
+  	url:"controller/busca_cliente_imprimir.php",
+  	success:function(data){
+  		$("#imagen").html(data);
+  	}
+  });
+ });
+</script>

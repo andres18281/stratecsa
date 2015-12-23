@@ -18,9 +18,9 @@
   
         public function __construct($user,$pass){
                 $this->host = "localhost";//"190.84.233.180";
-                $this->user = $user;
-                $this->pass = $pass;
-                $this->db = "velasquez3";   
+                $this->user = "user_admin";
+                $this->pass = "claudio2015";
+                $this->db = "stra_credenciales";   
 
         }
 

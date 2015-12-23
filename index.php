@@ -5,16 +5,17 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   
+ <script src="script/menu_dropdown_session.js"></script>  
   <title></title>
   <?php
-  /*
    if(!isset($_SESSION)){ 
      session_start(); 
    }
    if(!isset($_SESSION['pass_perfil_rol'])){
    	 header("location: login.php");
    }
-   */
+   
   ?>
   <style type="text/css">
 
@@ -97,12 +98,32 @@ body {
     border-bottom: 0;
   }
 }
-
-
-
-  </style>
+ body{
+ 	margin-top:0px !important;
+ 	margin-bottom: 0px !important;
+ }
+</style>
 </head>
 <body>
+
+ <nav class="navbar navbar-default container-fluid">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="buscar_person.php">Buscar</a></li>
+            
+            <li role="separator"  class="divider"></li>
+            <li><a href="#" id="log_out">Salir</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+ </nav>
+
+
  <div class="container">
     <h1 class="well">Registrar Datos</h1>
 	<div class="col-lg-12 well">
@@ -145,16 +166,49 @@ body {
 						<label>Correo</label>
 						<input type="text" placeholder="Correo Aqui" id="email" class="form-control">
 					</div>		
-					<button type="button" id="btn_enviar" class="btn btn-lg btn-info">Guardar</button>					
+					<button type="button" id="btn_enviar" class="btn btn-lg btn-success">Guardar</button>	
+					<button type="button" id="btn_buscar" class="btn btn-lg btn-info">Consultar</button>	
 					</div>
+
 				</form> 
 				</div>
 	</div>
 	</div>
 </body>
 </html>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Buscar por cedula</h4>
+      </div>
+      <div class="modal-body">
+       <input type="number" id="inp_cedu" class="form-control" placeholder="Digite la cedula"><br>
+       <button class="btn btn-info"  id="btn_busc_cedu">Buscar por cedula </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
  $(function(){
+   $("#btn_buscar").click(function(){
+    $("#myModal").modal('show');
+   });
+   
+   $("#btn_busc_cedu").click(function(){
+   	 var cedu = $("#inp_cedu").val();
+   	 if(cedu > 0){
+   	  window.open("controller/consulta_person.php?id="+cedu);
+   	 }
+   });
+
   $("#btn_enviar").click(function(){
    var ce = $("#cedula").val();
    var nomb = $("#nombre").val();
@@ -163,7 +217,7 @@ body {
    var tele = $("#telefo").val();
    var cargo = $("#cargo").val();
    var email = $("#email").val();
-   if(ce.length > 0 && nomb.length > 0 && apelli.length > 0 && dire.length > 0 && tele > 0  && email.length > 0){
+   if(ce.length > 0 && nomb.length > 0 && apelli.length > 0){
    	 $.ajax({
    	 	datetype:"html",
    	 	type:"post",
@@ -171,9 +225,9 @@ body {
    	 	data:{"cedula":ce,"nombre":nomb,"apellido":apelli,"direct":dire,"telefo":tele,"cargo":cargo,"email":email},
    	 	success:function(data){
    	 	 var data = JSON.parse(data);
-   	 	 var msn = data.exito;
+   	 	 var msn = data.Client_id;
    	 	 if(msn.length > 0){
-   	 	 	alert(msn);
+   	 	 	window.open("controller/consulta_person.php?id="+data.Client_id);
    	 	 	$("#cedula").val("");
    			$("#nombre").val("");
    			$("#apellido").val("");
@@ -190,7 +244,7 @@ body {
    	alert("falta digitar datos");
    }
   });
+  
  });
  	
 </script>
- 

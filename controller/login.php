@@ -18,7 +18,7 @@
            $_SESSION["perfil"] = "root";
            $_SESSION["pass"] = "";
         }
-        $consulta = new Consultas("root",""); 
+        $consulta = new Conectar("root",""); 
         $tipo_usuario = $consulta->consulta_usuario($this->user,$this->pass);
         if(isset($tipo_usuario)){
           $rol = $tipo_usuario["tipo_perfil"];

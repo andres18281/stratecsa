@@ -5,6 +5,16 @@
  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<title></title>
+  <?php
+  
+   if(!isset($_SESSION)){ 
+     session_start(); 
+   }
+   if(!isset($_SESSION['pass_perfil_rol'])){
+   	 header("location: login.php");
+   }
+   ?>
+
 </head>
 <body>
  <div class="navbar navbar-default">
@@ -31,14 +41,32 @@
      
    </div><!--/.row-->
     <div class="row">
-     <div class="col-md-3"></div>
-     <div class="col-md-6" id="imagen"></div>
-     <div class="col-md-3"></div>	
+     <div class="col-md-3" ></div> 
+     <div class="col-md-8" id="imagen" style="width:320px;height:384px;"></div>
+     <div class="col-md-1" id="imp"></div>	
     </div>
   </div>
 </body>
 </html>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Informacion</h4>
+      </div>
+      <div class="modal-body">
+        <p>La cedula no existe en el sistema</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
  $(function(){
@@ -48,11 +76,15 @@
       $.ajax({
       	//datetype:"html",
       	type:"post",
-      	url:"controller/buscar_client.php",//
+      	url:"controller/buscar_client.php",//buscar_client
       	data:{"id":id},
       	success:function(data){
-      	  $("#imagen").html(data);
-      	// var data = JSON.parse(data);
+      	  if(data == "no_existe"){
+      	  	$("#myModal").modal('show');
+      	  }else{
+ 			$("#imp").append('<input type="button" class="btn btn-info btn-xs" value="Click para imprimir" onClick="window.print()">');
+      	    $("#imagen").html(data);
+      	  }
       	}
       });
     }else{

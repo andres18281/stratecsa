@@ -19,9 +19,9 @@
   
         public function __construct($user,$pass){
                 $this->host = "localhost";//"190.84.233.180";
-                $this->user = $user;
-                $this->pass = $pass;
-                $this->db = "credenciales";   
+                $this->user = "user_admin";
+                $this->pass = "claudio2015";
+                $this->db = "stra_credenciales";   
 
         }
 
@@ -112,6 +112,14 @@
            }
             return $salida;    
         }
+      }
+
+      function encriptar($contrasena, $numero = 7){
+        $salt = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz./';
+        $saltc = sprintf('$2y$%02d$', $numero);
+        for($i = 0; $i < 22; $i++)
+          $saltc .= $salt[ rand(0, strlen($salt)-1) ];
+          return crypt($contrasena, $saltc);
       }
 
       public function close_conection(){

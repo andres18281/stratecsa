@@ -5,6 +5,16 @@
  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
  <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+ <?php
+ if(!isset($_SESSION)){ 
+     session_start(); 
+   }
+   if(isset($_SESSION['pass_perfil_rol'])){
+   	 header("location: index.php");
+   }
+   
+
+  ?> 
 	<title></title>
   <style type="text/css">
   	body{
@@ -34,16 +44,12 @@
 			    	<form accept-charset="UTF-8" method="post" role="form">
                     <fieldset>
 			    	  	<div class="form-group">
-			    		    <input class="form-control" placeholder="E-mail o cedula" name="email" type="text">
+			    		    <input class="form-control" placeholder="E-mail" name="email" type="text">
 			    		</div>
 			    		<div class="form-group">
-			    			<input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
+			    			<input class="form-control" placeholder="password" name="password" type="password" value="">
 			    		</div>
-			    		<div class="checkbox">
-			    	    	<label>
-			    	    		<input name="remember" type="checkbox" value="Remember Me"> Remember Me
-			    	    	</label>
-			    	    </div>
+			    		
 			    		<input class="btn btn-lg btn-success btn-block" name="btn_enviar" type="submit" value="Entrar">
 			    	</fieldset>
 			      	</form>
@@ -71,7 +77,7 @@ $(document).ready(function(){
 
 </script>
 <?php
- include_once '../controller/login.php';
+ include_once 'controller/login.php';
  if(!isset($_SESSION)){ 
     session_start(); 
   }
@@ -80,8 +86,12 @@ $(document).ready(function(){
  	 $mail = $_POST['email'];
  	 $pass = $_POST['password'];
  	 $login = new login($mail,$pass);
+ 	 
  	 if($login->loguearse()){
-        header("location: ../index.php");
+        header("location: index.php");
+
+     }else{
+     	echo "no se ha logueado";
      }
    } 
  }
